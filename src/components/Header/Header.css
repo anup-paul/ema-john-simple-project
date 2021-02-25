@@ -1,0 +1,26 @@
+.headerDesign img
+{
+    height: 50px;
+}
+.headerDesign
+{
+    text-align: center;
+}
+.headerDesign nav
+{
+    background-color: black;
+    line-height: 40px;
+    font-size: 20px;
+}
+.headerDesign a
+{
+    text-decoration: none;
+    color: whitesmoke;
+    margin-right: 20px;
+    padding: 5px;
+}
+nav a:hover
+{
+    background-color: grey;
+    border-radius: 10px;
+}
