@@ -21,6 +21,7 @@ const Shop = () => {
                 {
                     products.map(pd => (
                     <Product
+                    showAddToCard = {true}
                      productName ={pd}
                      addProduct= {addProduct} 
                      >
