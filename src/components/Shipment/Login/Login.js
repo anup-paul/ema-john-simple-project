@@ -2,7 +2,7 @@
 import { useContext, useState } from 'react';
 import { UserContext } from "../../../App";
 import { useHistory, useLocation } from "react-router";
-import { handleFbSignIn, handleGoogleSignIn, handleSignOut, initializeLoginFramework } from './LoginManager';
+import { createUserWithEmailAndPassword, handleFbSignIn, handleGoogleSignIn, handleSignOut, initializeLoginFramework, signInWithEmailAndPassword } from './LoginManager';
 
 
 // firebase.initializeApp(firebaseConfig);
@@ -37,9 +37,10 @@ function Login() {
       handleGoogleSignIn()
       .then(res => 
         {
-            setUser(res);
-            setLoggedInUser(res);
-            history.replace(from);
+          handleResponse(res, true);
+            // setUser(res);
+            // setLoggedInUser(res);
+            // history.replace(from);
         })
   }
 
@@ -48,9 +49,10 @@ function Login() {
       handleFbSignIn()
       .then(res =>
         {
-            setUser(res);
-            setLoggedInUser(res);
-            history.replace(from);
+          handleResponse(res, true);
+            // setUser(res);
+            // setLoggedInUser(res);
+            // history.replace(from);
         })
   }
 
@@ -59,17 +61,14 @@ function Login() {
     handleSignOut()
     .then(res =>
         {
-            setUser(res);
-            setLoggedInUser(res);
+          handleResponse(res, false);
+            // setUser(res);
+            // setLoggedInUser(res);
         })
   }
 
 
 
-  
-
-
-  
 
   const handleblur = (event) => {
     // console.log(event.target.name, event.target.value);
@@ -93,12 +92,36 @@ function Login() {
     // console.log(user.email, user.password)
     if (newUser && user.email && user.password) {
       // console.log('submitting')
-      
+      createUserWithEmailAndPassword(user.name, user.email, user.password)
+      .then(res =>
+        {
+          handleResponse(res, true);
+            // setUser(res);
+            // setLoggedInUser(res);
+            // history.replace(from);
+        })
     }
     if (!newUser && user.email && user.password) {
-     
+        signInWithEmailAndPassword(user.email, user.password)
+        .then(res =>
+          {
+            handleResponse(res, true);
+            // setUser(res);
+            // setLoggedInUser(res);
+            // history.replace(from);
+          })
     }
     event.preventDefault();
+  }
+
+  const handleResponse = (res, redirect) =>
+  {
+    setUser(res);
+    setLoggedInUser(res);
+    if(redirect)
+    {
+      history.replace(from);
+    }
   }
 
 
